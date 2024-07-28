@@ -10,20 +10,18 @@ import androidx.core.app.NotificationCompat
 
 object NotificationUtils {
 
-private const val NOTIF_TITLE = "my app title"
-private const val NOTIF_TEXT = "my app text"
+    private const val NOTIF_TITLE = "my title"
+    private const val NOTIF_TEXT = "my text"
     private const val CHANNEL_ID = "notification_channel_id"
     private const val NOTIF_ID = 111
     private const val CHANNEL_NAME = "Notification Channel"
-    private const val CHANNEL_DESCRIPTION = "Harmless Notification Channel"
+
+    private var notificationManager: NotificationManager? = null
 
     fun createNotificationChannel(context: Context) {
-        val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT).apply {
-            description = CHANNEL_DESCRIPTION
-        }
-        val notificationManager: NotificationManager =
-            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.createNotificationChannel(channel)
+        val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT)
+        notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager?.createNotificationChannel(channel)
     }
 
     fun postNotification(context: Context) {
@@ -34,14 +32,7 @@ private const val NOTIF_TEXT = "my app text"
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .build()
 
-        val notificationManager: NotificationManager =
-            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.notify(NOTIF_ID, notification)
+        notificationManager?.notify(NOTIF_ID, notification)
     }
 
-    fun cancelNotification(context: Context, notificationId: Int) {
-        val notificationManager: NotificationManager =
-            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.cancel(notificationId)
-    }
 }

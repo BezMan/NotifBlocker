@@ -10,12 +10,13 @@ class NotificationListener : NotificationListenerService() {
 
     override fun onNotificationPosted(sbn: StatusBarNotification) {
         val packageName = sbn.packageName
-        val tickerText = sbn.notification.tickerText ?: "No ticker text"
         val title = sbn.notification.extras.getString("android.title", "No title")
         val text = sbn.notification.extras.getString("android.text", "No text")
 
+        val timestamp = System.currentTimeMillis()
+
         // Log the notification
-        Log.d("NotificationListener", "Notification from $packageName: $tickerText - $title: $text")
+        Log.d("ActiveTask", "timestamp: $timestamp, package: $packageName,  title: $title: text: $text")
 
         // Check if the package is in the blocked list
         if (packageName in blockedPackages) {
