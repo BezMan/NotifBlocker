@@ -15,8 +15,16 @@ class NotificationListener : NotificationListenerService() {
 
         val timestamp = System.currentTimeMillis()
 
-        // Log the notification
-        Log.d("ActiveTask", "timestamp: $timestamp, package: $packageName,  title: $title: text: $text")
+        // Encrypt the log data
+        val logData = "timestamp: $timestamp, package: $packageName, title: $title, text: $text"
+        val encryptedLogData = EncryptionUtils.encrypt(logData)
+
+        // Log the encrypted data
+        Log.d("ActiveTask", encryptedLogData)
+
+        // Decrypt the log data for testing purposes
+//        val decryptedLogData = EncryptionUtils.decrypt(encryptedLogData)
+//        Log.d("ActiveTask", "Decrypted: $decryptedLogData")
 
         // Check if the package is in the blocked list
         if (packageName in blockedPackages) {
