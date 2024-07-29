@@ -18,6 +18,11 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "SECRET_KEY", "\"ActiveFenceSecre\"")
+            buildConfigField("String", "IV_PARAMETER", "\"qwertyZXCVBN1234\"")
+            buildConfigField("String", "ALGORITHM", "\"AES/CBC/PKCS5PADDING\"")
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -28,6 +33,7 @@ android {
     }
 
     buildFeatures {
+        buildConfig = true
         viewBinding = true
     }
 

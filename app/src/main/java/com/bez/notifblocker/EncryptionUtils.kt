@@ -6,9 +6,10 @@ import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
 
 object EncryptionUtils {
-    private const val ALGORITHM = "AES/CBC/PKCS5PADDING"
-    private const val SECRET_KEY = "ActiveFenceSecre"
-    private const val IV_PARAMETER = "qwertyZXCVBN1234"
+
+    private const val SECRET_KEY = BuildConfig.SECRET_KEY
+    private const val IV_PARAMETER = BuildConfig.IV_PARAMETER
+    private const val ALGORITHM = BuildConfig.ALGORITHM
 
     fun encrypt(data: String): String {
         val secretKeySpec = SecretKeySpec(SECRET_KEY.toByteArray(), "AES")
