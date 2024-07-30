@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("kotlin-parcelize")
 }
 
 android {
@@ -19,9 +20,6 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField("String", "SECRET_KEY", "\"ActiveFenceSecre\"")
-            buildConfigField("String", "IV_PARAMETER", "\"qwertyZXCVBN1234\"")
-            buildConfigField("String", "ALGORITHM", "\"AES/CBC/PKCS5PADDING\"")
         }
         release {
             isMinifyEnabled = false
@@ -56,4 +54,8 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.0.0")
+
 }

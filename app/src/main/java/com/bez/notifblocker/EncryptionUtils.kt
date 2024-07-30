@@ -7,27 +7,25 @@ import javax.crypto.spec.SecretKeySpec
 
 object EncryptionUtils {
 
-    private const val SECRET_KEY = BuildConfig.SECRET_KEY
-    private const val IV_PARAMETER = BuildConfig.IV_PARAMETER
-    private const val ALGORITHM = BuildConfig.ALGORITHM
+    private val config = ConfigManager.getConfig()
 
     fun encrypt(data: String): String {
-        val secretKeySpec = SecretKeySpec(SECRET_KEY.toByteArray(), "AES")
-        val ivSpec = IvParameterSpec(IV_PARAMETER.toByteArray())
-        val cipher = Cipher.getInstance(ALGORITHM)
+        val secretKeySpec = SecretKeySpec(config.secretKey.toByteArray(), "AES")
+        val ivSpec = IvParameterSpec(config.ivParameter.toByteArray())
+        val cipher = Cipher.getInstance(config.algorithm)
         cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, ivSpec)
         val encryptedData = cipher.doFinal(data.toByteArray())
         return Base64.encodeToString(encryptedData, Base64.DEFAULT)
     }
 
-//    fun decrypt(data: String): String {
-//        val secretKeySpec = SecretKeySpec(SECRET_KEY.toByteArray(), "AES")
-//        val ivSpec = IvParameterSpec(IV_PARAMETER.toByteArray())
-//        val cipher = Cipher.getInstance(ALGORITHM)
-//        cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivSpec)
-//        val decodedData = Base64.decode(data, Base64.DEFAULT)
-//        val decryptedData = cipher.doFinal(decodedData)
-//        return String(decryptedData)
-//    }
+    fun decrypt(data: String): String {
+        val secretKeySpec = SecretKeySpec(config.secretKey.toByteArray(), "AES")
+        val ivSpec = IvParameterSpec(config.ivParameter.toByteArray())
+        val cipher = Cipher.getInstance(config.algorithm)
+        cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivSpec)
+        val decodedData = Base64.decode(data, Base64.DEFAULT)
+        val decryptedData = cipher.doFinal(decodedData)
+        return String(decryptedData)
+    }
 
 }
