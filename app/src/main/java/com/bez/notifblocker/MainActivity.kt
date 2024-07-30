@@ -19,7 +19,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Initialize EncryptionUtils
         ConfigManager.initialize(this)
 
         // Initialize the permission launcher
