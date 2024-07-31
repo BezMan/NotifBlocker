@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Hide the button initially
+        // initial text before permissions granted
         binding.permsText.text = "go to settings and allow all permissions!"
     }
 
@@ -48,8 +48,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initUI() {
-        // Show the button if permissions are granted
-        binding.permsText.text = "Service is Running"
+        // text after permissions are granted
+        binding.permsText.text = "Service is Running and Protecting you"
     }
 
     private fun showToast(message: String) {
