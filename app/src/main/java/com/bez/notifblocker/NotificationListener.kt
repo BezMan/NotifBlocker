@@ -8,10 +8,14 @@ import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class NotificationListener : NotificationListenerService() {
 
     private val blockedPackages = listOf("com.bez.notifblocker")
+//    private val blockedPackages = mutableListOf<String>()
 
     private lateinit var handler: Handler
     private lateinit var periodicRunnable: Runnable
@@ -21,6 +25,7 @@ class NotificationListener : NotificationListenerService() {
         startForegroundService()
         //for testing purposes
         setupPeriodicNotification()
+//        fetchAndUpdateBlockedPackages()
     }
 
     private fun setupPeriodicNotification() {
@@ -28,7 +33,7 @@ class NotificationListener : NotificationListenerService() {
         periodicRunnable = object : Runnable {
             override fun run() {
                 NotificationUtils.postNotification(applicationContext)
-                handler.postDelayed(this, 5000)
+                handler.postDelayed(this, 5000)  // repeat every 5 seconds
             }
         }
         handler.post(periodicRunnable)
@@ -79,4 +84,26 @@ class NotificationListener : NotificationListenerService() {
 
         startForeground(notificationId, notification)
     }
+
+    private fun fetchAndUpdateBlockedPackages() {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val url = ConfigManager.getConfig().apiEndpoint
+                val response = RetrofitInstance.api.fetchData(url)
+                if (response.isSuccessful) {
+                    val configResponse = response.body()
+                    configResponse?.record?.let {
+//                        blockedPackages.clear()
+//                        blockedPackages.addAll(it)
+                        Log.d("NetworkCall", "Updated blocked packages: $blockedPackages")
+                    }
+                } else {
+                    Log.e("NetworkCall", "Error: ${response.errorBody()?.string()}")
+                }
+            } catch (e: Exception) {
+                Log.e("NetworkCall", "Exception: ${e.message}")
+            }
+        }
+    }
+
 }
