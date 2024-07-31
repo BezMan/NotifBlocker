@@ -19,8 +19,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        ConfigManager.initialize(this)
-
         // Initialize the permission launcher
         requestPermissionLauncher = registerForActivityResult(
             ActivityResultContracts.RequestPermission()

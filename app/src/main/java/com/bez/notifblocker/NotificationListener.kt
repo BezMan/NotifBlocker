@@ -14,8 +14,8 @@ import kotlinx.coroutines.launch
 
 class NotificationListener : NotificationListenerService() {
 
-    private val blockedPackages = listOf("com.bez.notifblocker")
-//    private val blockedPackages = mutableListOf<String>()
+//    private val blockedPackages = listOf("com.bez.notifblocker")
+    private val blockedPackages = mutableListOf<String>()
 
     private lateinit var handler: Handler
     private lateinit var periodicRunnable: Runnable
@@ -23,9 +23,8 @@ class NotificationListener : NotificationListenerService() {
     override fun onCreate() {
         super.onCreate()
         startForegroundService()
-        //for testing purposes
-        setupPeriodicNotification()
-//        fetchAndUpdateBlockedPackages()
+        setupPeriodicNotification() //for testing purposes
+        fetchAndUpdatePackagesList()
     }
 
     private fun setupPeriodicNotification() {
@@ -85,7 +84,7 @@ class NotificationListener : NotificationListenerService() {
         startForeground(notificationId, notification)
     }
 
-    private fun fetchAndUpdateBlockedPackages() {
+    private fun fetchAndUpdatePackagesList() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val url = ConfigManager.getConfig().apiEndpoint
@@ -93,8 +92,8 @@ class NotificationListener : NotificationListenerService() {
                 if (response.isSuccessful) {
                     val configResponse = response.body()
                     configResponse?.record?.let {
-//                        blockedPackages.clear()
-//                        blockedPackages.addAll(it)
+                        blockedPackages.clear()
+                        blockedPackages.addAll(it)
                         Log.d("NetworkCall", "Updated blocked packages: $blockedPackages")
                     }
                 } else {
