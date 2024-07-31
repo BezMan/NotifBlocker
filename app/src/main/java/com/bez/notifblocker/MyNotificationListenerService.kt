@@ -12,7 +12,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class NotificationListener : NotificationListenerService() {
+class MyNotificationListenerService : NotificationListenerService() {
 
     private val myPackages = listOf("com.bez.notifblocker")
     private val blockedPackages = mutableListOf<String>()

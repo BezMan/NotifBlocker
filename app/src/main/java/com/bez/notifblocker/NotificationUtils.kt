@@ -14,12 +14,16 @@ object NotificationUtils {
     private const val NOTIF_ID = 111
     private const val CHANNEL_NAME = "Notification Channel"
 
-    private var notificationManager: NotificationManager? = null
+    private lateinit var notificationManager: NotificationManager
 
-    fun createNotificationChannel(context: Context) {
-        val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT)
+    fun initialize(context: Context) {
         notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager?.createNotificationChannel(channel)
+        createNotificationChannel()
+    }
+
+    private fun createNotificationChannel() {
+        val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT)
+        notificationManager.createNotificationChannel(channel)
     }
 
     fun postNotification(context: Context) {
@@ -30,7 +34,7 @@ object NotificationUtils {
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .build()
 
-        notificationManager?.notify(NOTIF_ID, notification)
+        notificationManager.notify(NOTIF_ID, notification)
     }
 
 }

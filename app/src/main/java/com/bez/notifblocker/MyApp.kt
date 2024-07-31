@@ -8,8 +8,7 @@ class MyApp: Application() {
         super.onCreate()
 
         ConfigManager.initialize(this)
-//        NotificationUtils.initialize(this)
-//        NotificationUtils.createNotificationChannel()
+        NotificationUtils.initialize(this)
 
     }
 }

@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Hide the button initially
-        binding.permsText.visibility = View.VISIBLE
+        binding.permsText.text = "go to settings and allow all permissions!"
     }
 
     override fun onStart() {
@@ -49,8 +49,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initUI() {
         // Show the button if permissions are granted
-        binding.permsText.visibility = View.GONE
-        NotificationUtils.createNotificationChannel(this)
+        binding.permsText.text = "Service is Running"
     }
 
     private fun showToast(message: String) {
