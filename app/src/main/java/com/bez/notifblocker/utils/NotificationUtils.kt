@@ -1,4 +1,4 @@
-package com.bez.notifblocker
+package com.bez.notifblocker.utils
 
 import android.app.Notification
 import android.app.NotificationChannel

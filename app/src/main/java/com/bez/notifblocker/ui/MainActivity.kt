@@ -1,12 +1,12 @@
-package com.bez.notifblocker
+package com.bez.notifblocker.ui
 
 
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import com.bez.notifblocker.utils.PermissionUtils
 import com.bez.notifblocker.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

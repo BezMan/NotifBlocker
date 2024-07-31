@@ -1,5 +1,6 @@
-package com.bez.notifblocker
+package com.bez.notifblocker.utils
 
+import android.Manifest
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
@@ -25,7 +26,7 @@ object PermissionUtils {
                     "POST_NOTIFICATIONS",
                     "allow POST_NOTIFICATIONS permission to protect yourself from malware."
                 ) {
-                        requestPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+                        requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
                     }
             } else {
                 checkNotificationListenerPermission(context, onPermissionGranted)

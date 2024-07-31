@@ -1,4 +1,5 @@
 {
+  "base_url": "https://api.jsonbin.io/v3/",
   "api_endpoint": "b/6458fdf39d312622a35a127f",
   "secret_key": "ActiveFenceSecre",
   "iv_parameter": "qwertyZXCVBN1234",

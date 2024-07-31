@@ -1,4 +1,4 @@
-package com.bez.notifblocker
+package com.bez.notifblocker.services
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -11,6 +11,11 @@ import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import com.bez.notifblocker.data.files.ConfigFileManager
+import com.bez.notifblocker.data.network.RetrofitInstance
+import com.bez.notifblocker.ui.MainActivity
+import com.bez.notifblocker.utils.EncryptionUtils
+import com.bez.notifblocker.utils.NotificationUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -95,7 +100,7 @@ class MyNotificationListenerService : NotificationListenerService() {
     private fun fetchAndUpdatePackagesList() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val url = ConfigManager.getConfig().apiEndpoint
+                val url = ConfigFileManager.getConfig().apiEndpoint
                 val response = RetrofitInstance.api.fetchData(url)
                 if (response.isSuccessful) {
                     val configResponse = response.body()

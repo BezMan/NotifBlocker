@@ -1,13 +1,14 @@
-package com.bez.notifblocker
+package com.bez.notifblocker.utils
 
 import android.util.Base64
+import com.bez.notifblocker.data.files.ConfigFileManager
 import javax.crypto.Cipher
 import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
 
 object EncryptionUtils {
 
-    private val config = ConfigManager.getConfig()
+    private val config = ConfigFileManager.getConfig()
 
     fun encrypt(data: String): String {
         val secretKeySpec = SecretKeySpec(config.secretKey.toByteArray(), "AES")

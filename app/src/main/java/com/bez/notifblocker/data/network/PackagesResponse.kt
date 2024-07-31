@@ -1,6 +1,6 @@
-package com.bez.notifblocker
+package com.bez.notifblocker.data.network
 
-data class ConfigResponse(
+data class PackagesResponse(
     val record: List<String>,
     val metadata: Metadata
 )
