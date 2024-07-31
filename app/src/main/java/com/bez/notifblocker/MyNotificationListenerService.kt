@@ -1,6 +1,9 @@
 package com.bez.notifblocker
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.os.Handler
 import android.os.Looper
@@ -69,7 +72,12 @@ class MyNotificationListenerService : NotificationListenerService() {
 
     private fun startForegroundService() {
         val channelId = "notification_listener_channel_id"
+        val channelName = "Notification Listener Service"
         val notificationId = 1
+
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val channel = NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_DEFAULT)
+        notificationManager.createNotificationChannel(channel)
 
         val notificationIntent = Intent(this, MainActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_IMMUTABLE)
