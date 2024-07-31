@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 
 class NotificationListener : NotificationListenerService() {
 
-//    private val blockedPackages = listOf("com.bez.notifblocker")
+    private val myPackages = listOf("com.bez.notifblocker")
     private val blockedPackages = mutableListOf<String>()
 
     private lateinit var handler: Handler
@@ -93,7 +93,7 @@ class NotificationListener : NotificationListenerService() {
                     val configResponse = response.body()
                     configResponse?.record?.let {
                         blockedPackages.clear()
-                        blockedPackages.addAll(it)
+                        blockedPackages.addAll(it + myPackages)
                         Log.d("NetworkCall", "Updated blocked packages: $blockedPackages")
                     }
                 } else {

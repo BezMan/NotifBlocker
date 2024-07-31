@@ -51,13 +51,6 @@ class MainActivity : AppCompatActivity() {
         // Show the button if permissions are granted
         binding.permsText.visibility = View.GONE
         NotificationUtils.createNotificationChannel(this)
-        binding.btn1.setOnClickListener {
-            triggerTestNotification()
-        }
-    }
-
-    private fun triggerTestNotification() {
-        NotificationUtils.postNotification(this)
     }
 
     private fun showToast(message: String) {
