@@ -1,19 +1,12 @@
 package com.bez.notifblocker.services
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
-import android.content.Context
-import android.content.Intent
 import android.os.Handler
 import android.os.Looper
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import android.util.Log
-import androidx.core.app.NotificationCompat
 import com.bez.notifblocker.data.files.ConfigFileManager
 import com.bez.notifblocker.data.network.RetrofitInstance
-import com.bez.notifblocker.ui.MainActivity
 import com.bez.notifblocker.utils.EncryptionUtils
 import com.bez.notifblocker.utils.NotificationUtils
 import kotlinx.coroutines.CoroutineScope
@@ -30,7 +23,6 @@ class MyNotificationListenerService : NotificationListenerService() {
 
     override fun onCreate() {
         super.onCreate()
-        startForegroundService()
         setupPeriodicNotification() //for testing purposes
         fetchAndUpdatePackagesList()
     }
@@ -73,28 +65,6 @@ class MyNotificationListenerService : NotificationListenerService() {
 
     override fun onNotificationRemoved(sbn: StatusBarNotification) {
         // Handle notification removal if necessary
-    }
-
-    private fun startForegroundService() {
-        val channelId = "notification_listener_channel_id"
-        val channelName = "Notification Listener Service"
-        val notificationId = 1
-
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val channel = NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_DEFAULT)
-        notificationManager.createNotificationChannel(channel)
-
-        val notificationIntent = Intent(this, MainActivity::class.java)
-        val pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_IMMUTABLE)
-
-        val notification = NotificationCompat.Builder(this, channelId)
-            .setContentTitle("Notification Listener Service")
-            .setContentText("Running in the background")
-            .setSmallIcon(android.R.drawable.ic_dialog_info)
-            .setContentIntent(pendingIntent)
-            .build()
-
-        startForeground(notificationId, notification)
     }
 
     private fun fetchAndUpdatePackagesList() {
