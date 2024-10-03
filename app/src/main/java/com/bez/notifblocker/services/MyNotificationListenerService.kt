@@ -21,20 +21,29 @@ class MyNotificationListenerService : NotificationListenerService() {
     private lateinit var handler: Handler
     private lateinit var periodicRunnable: Runnable
 
+    private val runnable = object : Runnable {
+        override fun run() {
+            NotificationUtils.postNotification(applicationContext)
+            handler.postDelayed(this, 5000)  // repeat every 5 seconds
+        }
+    }
+
     override fun onCreate() {
         super.onCreate()
         setupPeriodicNotification() //for testing purposes
         fetchAndUpdatePackagesList()
     }
 
+
+    override fun onDestroy() {
+        super.onDestroy()
+        handler.removeCallbacks(runnable)
+    }
+
+
     private fun setupPeriodicNotification() {
         handler = Handler(Looper.getMainLooper())
-        periodicRunnable = object : Runnable {
-            override fun run() {
-                NotificationUtils.postNotification(applicationContext)
-                handler.postDelayed(this, 5000)  // repeat every 5 seconds
-            }
-        }
+        periodicRunnable = runnable
         handler.post(periodicRunnable)
     }
 
